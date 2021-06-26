@@ -409,6 +409,7 @@ module.exports = function (webpackEnv) {
                 ],
                 
                 plugins: [
+                  "styled-jsx/babel",
                   [
                     require.resolve('babel-plugin-named-asset-import'),
                     {
