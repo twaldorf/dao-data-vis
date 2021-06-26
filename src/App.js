@@ -1,16 +1,18 @@
 import logo from './logo.svg'
+import * as api from './scripts/api.js'
 import './App.css'
 
-import { Figure } from './components/Figure.js'
+import { Proposal } from './components/Proposal.js'
 
 function App() {
+
+  const id = 'fc6f60a0-bdb5-11eb-8849-33c326fb5301'
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-
+      <header>
       </header>
-      <Figure size={800}/>
+      <Proposal id={id} />
     </div>
   );
 }
