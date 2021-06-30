@@ -1,5 +1,5 @@
 import {
-    Link, History
+    Link
   } from 'react-router-dom'
 
 export const ProposalInList = (props) => {
@@ -23,7 +23,7 @@ export const ProposalInList = (props) => {
                     gap: 1rem;
                 }
                 li .type {
-                    color: ${props.proposal.type == 'poi' ? 'red' : 'green'};
+                    color: ${props.proposal.type === 'poi' ? 'red' : 'green'};
                     text-transform: uppercase;
                 }
                 li .status {

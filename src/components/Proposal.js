@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { BarChartOfValues, VotesOrderedByVp, VoteCount, AvgVp, TotalVp, MedianVp, VoteGap } from './Figures.js'
+import { VotesOrderedByVp, VoteCount, AvgVp, TotalVp, MedianVp, VoteGap } from './Figures.js'
 import { Loading } from './Loading.js'
 import * as api from '../scripts/api.js'
-import * as fig from '../scripts/fig.js'
 import { useParams } from 'react-router-dom'
 
 export const Proposal = (props) => {

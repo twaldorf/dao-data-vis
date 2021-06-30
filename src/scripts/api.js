@@ -1,5 +1,3 @@
-const id = 'fc6f60a0-bdb5-11eb-8849-33c326fb5301'
-
 export const getProposalData = async (id) => {
     const data = await fetch(`https://governance.decentraland.org/api/proposals/${id}`).then(response => response.json()).then(d => d.data)
     return data
@@ -36,7 +34,7 @@ export const refreshData = async () => {
                     (votesByProposal) => {
                         const voteDataByProposal = votesByProposal.map(proposal => proposal.data)
                         let votes = [];
-                        voteDataByProposal.map((voteSet, ind, arr) => {
+                        voteDataByProposal.forEach((voteSet, ind, arr) => {
                             const voteIds = Object.keys(voteSet)
                             voteIds.forEach(
                                 (voteId) => {
@@ -45,7 +43,6 @@ export const refreshData = async () => {
                                 }
                             )
                         })
-                        console.log(votes.length)
                         window.localStorage.setItem('dclVotes', JSON.stringify(votes))
                         window.localStorage.setItem('dclVotesByProposal', JSON.stringify(voteDataByProposal))
                 })

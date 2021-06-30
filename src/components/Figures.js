@@ -1,5 +1,4 @@
 import React from 'react'
-import * as api from '../scripts/api.js'
 import * as fig from '../scripts/fig.js'
 import { Loading } from './Loading.js'
 

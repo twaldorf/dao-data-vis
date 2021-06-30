@@ -1,5 +1,3 @@
-import logo from './logo.svg'
-import * as api from './scripts/api.js'
 import './App.css'
 import { ProposalList } from './components/ProposalList.js'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
