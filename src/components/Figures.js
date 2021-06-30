@@ -1,6 +1,7 @@
 import React from 'react'
 import * as api from '../scripts/api.js'
 import * as fig from '../scripts/fig.js'
+import { Loading } from './Loading.js'
 
 export const VotesOrderedByVp = (props) => {
     if (props.values) {
@@ -10,29 +11,81 @@ export const VotesOrderedByVp = (props) => {
     }
 }
 
+export const VpNumber = (props) => {
+    return (<>
+        <div>
+            <li><span className="title">{props.title}</span></li>
+            <li><span>{props.figure}</span></li>
+        </div>
+        <style jsx>{`
+            .title {
+                font-weight: bold;
+                font-size: .8rem;
+            }
+            li {
+                list-style: none;
+            }
+            div {
+                text-align: left;
+            }
+        `}</style>
+    </>)
+}
+
+export const VoteCount = (props) => {
+    const { values } = props
+    return (<>{
+        values ? 
+        <VpNumber title="Total Votes" figure={values.length} />
+        :
+        <Loading />
+    }</>)
+}
+
+export const TotalVp = (props) => {
+    return (
+        <>{ 
+            props.values ? 
+            <VpNumber title="Total Vote Power" figure={props.values.reduce((p,c)=>p+c)} /> 
+            : 
+            <Loading />
+        }</>
+    )
+}
+
 export const AvgVp = (props) => {
-    if (props.values) {
-        return (<>
-            <div>
-               <li><span className="title">Average VP per vote</span></li>
-               <li><span>{props.values.reduce((p,c)=>p+c)/props.values.length}</span></li>
-            </div>
-            <style jsx>{`
-                .title {
-                    font-weight: bold;
-                    font-size: .8rem;
-                }
-                li {
-                    list-style: none;
-                }
-                div {
-                    text-align: left;
-                }
-            `}</style>
-        </>)
-    } else {
-        return <p>Loading...</p>
-    }
+        return (
+            <>{
+                props.values ? 
+                <VpNumber title="Average Vote Power" 
+                figure={ props.values.reduce((p,c)=>p+c)/props.values.length} /> :
+                <Loading />
+            }</>
+        )
+}
+
+export const MedianVp = (props) => {
+    const median = props.values[Math.round(props.values.length/2)]
+    return (<>{
+        props.values ? 
+        <VpNumber title="Median Vote Power" figure={median}/>
+        :
+        <Loading />
+    }</>)
+}
+
+export const VoteGap = (props) => {
+    const { proposal, votes } = props
+    const { choices } = proposal.snapshot_proposal
+    // const type = choices.length > 2 ? 'poll' : 'boolean'
+    const choiceVotes = choices.map((choice, index) => {
+        const votesFor = votes.filter(vote => vote.choice == index + 1)
+        const vpFor = votesFor.reduce((p,c) => {return p + c.vp}, 0)
+        return { votesFor, vpFor }
+    })
+    const difference = Math.abs(choiceVotes[0].vpFor - choiceVotes[1].vpFor)
+    console.log(choiceVotes)
+    return (<VpNumber title="VP Gap" figure={difference} />)
 }
 
 export const BarChartOfValues = (props) => {

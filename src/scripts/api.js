@@ -5,6 +5,11 @@ export const getProposalData = async (id) => {
     return data
 }
 
+export const getAllProposals = async (id) => {
+    const data = await fetch(`https://governance.decentraland.org/api/proposals`).then(response => response.json()).then(d => d.data)
+    return data
+}
+
 export const proposalVotes = async (id) => {
     const data = await fetch(`https://governance.decentraland.org/api/proposals/${id}/votes`).then(response => response.json()).then(d => d.data)
     const voteIds = Object.keys(data)
