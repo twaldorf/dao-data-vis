@@ -10,7 +10,6 @@ export const ProposalList = (props) => {
         async function getProposals() {
             const allProposals = await getAllProposals()
             setProposals(allProposals)
-            console.log(allProposals)
         }
         getProposals()
     }, [])

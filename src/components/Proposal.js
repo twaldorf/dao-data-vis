@@ -16,7 +16,6 @@ export const Proposal = (props) => {
             const proposal = await api.getProposalData(id)
             setProposal(proposal)
             const votes = await api.proposalVotes(id)
-            console.log(proposal, votes)
             setValues(votes.map(vote => vote.vp))
             setVotes(votes)
         }
