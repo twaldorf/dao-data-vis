@@ -5,9 +5,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { Proposal } from './components/Proposal.js'
 
 function App() {
-
-  const id = 'fc6f60a0-bdb5-11eb-8849-33c326fb5301'
-
   return (
     <Router>
       <div className="App">

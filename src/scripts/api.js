@@ -47,6 +47,7 @@ export const refreshData = async () => {
                         window.localStorage.setItem('dclVotesByProposal', JSON.stringify(voteDataByProposal))
                 })
         })
+    return allVotes
 }
 
 export const loadDataFromLocal = () => {

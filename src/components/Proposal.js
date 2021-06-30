@@ -9,7 +9,7 @@ export const Proposal = (props) => {
     const [ proposal, setProposal ] = useState(false)
     const [ votes, setVotes ] = useState(false)
     const { id } = useParams()
-
+    
     React.useEffect(() => {
         async function fetchAll() {
             const proposal = await api.getProposalData(id)
@@ -19,7 +19,7 @@ export const Proposal = (props) => {
             setVotes(votes)
         }
         fetchAll()
-    }, [])
+    }, [id])
 
     return (
         <>

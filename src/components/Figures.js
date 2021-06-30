@@ -78,7 +78,7 @@ export const VoteGap = (props) => {
     const { choices } = proposal.snapshot_proposal
     // const type = choices.length > 2 ? 'poll' : 'boolean'
     const choiceVotes = choices.map((choice, index) => {
-        const votesFor = votes.filter(vote => vote.choice == index + 1)
+        const votesFor = votes.filter(vote => vote.choice === index + 1)
         const vpFor = votesFor.reduce((p,c) => {return p + c.vp}, 0)
         return { votesFor, vpFor }
     })
@@ -89,10 +89,9 @@ export const VoteGap = (props) => {
 
 export const BarChartOfValues = (props) => {
     const ref = React.useRef()
-    var ctx
-
+    
     React.useEffect(() => {
-        ctx = ref.current.getContext('2d')
+        const ctx = ref.current.getContext('2d')
         const canvas = ref.current
     
         const size = props.size
@@ -105,9 +104,7 @@ export const BarChartOfValues = (props) => {
         canvas.height = Math.floor(size * dpr)
     
         ctx.scale(dpr, dpr)
-    
-        // api.refreshData()
-    
+        
         fig.drawBarChartFromNumArray(ctx, props.values, 500, size, 'black')
     })
 
