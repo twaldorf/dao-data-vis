@@ -1,6 +1,7 @@
 import React from 'react'
 import * as fig from '../scripts/fig.js'
 import { Loading } from './Loading.js'
+import _JSXStyle from 'styled-jsx';
 
 export const VotesOrderedByVp = (props) => {
     if (props.values) {
@@ -104,7 +105,7 @@ export const BarChartOfValues = (props) => {
         canvas.height = Math.floor(size * dpr)
     
         ctx.scale(dpr, dpr)
-        
+
         fig.drawBarChartFromNumArray(ctx, props.values, 500, size, 'black')
     })
 

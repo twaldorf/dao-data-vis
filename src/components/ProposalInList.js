@@ -1,6 +1,7 @@
 import {
     Link
   } from 'react-router-dom'
+import _JSXStyle from 'styled-jsx';
 
 export const ProposalInList = (props) => {
     return (

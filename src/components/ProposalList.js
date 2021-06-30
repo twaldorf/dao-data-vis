@@ -2,6 +2,7 @@ import { ProposalInList } from './ProposalInList.js'
 import { useState, useEffect } from 'react'
 import { getAllProposals } from '../scripts/api.js'
 import { Loading } from './Loading.js'
+import _JSXStyle from 'styled-jsx';
 
 export const ProposalList = (props) => {
     const [ proposals, setProposals ] = useState(false)

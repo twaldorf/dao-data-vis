@@ -3,6 +3,7 @@ import { VotesOrderedByVp, VoteCount, AvgVp, TotalVp, MedianVp, VoteGap } from '
 import { Loading } from './Loading.js'
 import * as api from '../scripts/api.js'
 import { useParams } from 'react-router-dom'
+import _JSXStyle from 'styled-jsx';
 
 export const Proposal = (props) => {
     const [ voteVps, setValues ] = useState(false)
