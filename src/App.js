@@ -1,7 +1,7 @@
 import './App.css'
 import { ProposalList } from './components/ProposalList.js'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import _JSXStyle from 'styled-jsx';
+import _JSXStyle from 'styled-jsx/style';
 import { Proposal } from './components/Proposal.js'
 
 function App() {
