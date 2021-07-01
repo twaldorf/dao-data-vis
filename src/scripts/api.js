@@ -4,7 +4,7 @@ export const getProposalData = async (id) => {
 }
 
 export const getAllProposals = async (id) => {
-    const data = await fetch(`https://governance.decentraland.org/api/proposals`).then(response => response.json()).then(d => d.data)
+    const data = await fetch(`https://governance.decentraland.org/api/proposals`, {mode: 'no-cors'}).then(response => response.json()).then(d => d.data)
     return data
 }
 
