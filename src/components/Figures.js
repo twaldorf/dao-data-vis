@@ -1,7 +1,6 @@
 import React from 'react'
 import * as fig from '../scripts/fig.js'
 import { Loading } from './Loading.js'
-import _JSXStyle from 'styled-jsx/style';
 
 export const VotesOrderedByVp = (props) => {
     if (props.values) {
