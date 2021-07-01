@@ -20,7 +20,7 @@ function App() {
             <ProposalList />
           </Route>
         </Switch>
-        <style jsx>{`
+        <style>{`
           .App {
             text-align: left;
             padding: 4rem;

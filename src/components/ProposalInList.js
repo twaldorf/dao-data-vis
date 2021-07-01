@@ -12,7 +12,7 @@ export const ProposalInList = (props) => {
                     <h4 className="status">{props.proposal.status}</h4>
                 </li>
             </Link>
-            <style jsx>{`
+            <style>{`
                 li {
                     list-style: none;
                     margin: .5rem 0;

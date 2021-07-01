@@ -16,7 +16,7 @@ export const VpNumber = (props) => {
             <li><span className="title">{props.title}</span></li>
             <li><span>{props.figure}</span></li>
         </div>
-        <style jsx>{`
+        <style>{`
             .title {
                 font-weight: bold;
                 font-size: .8rem;

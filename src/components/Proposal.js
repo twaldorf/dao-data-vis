@@ -41,7 +41,7 @@ export const Proposal = (props) => {
                     { votes ? <VoteGap proposal={proposal} votes={votes} /> : <Loading /> }
                 </div>
             </section>
-            <style jsx>{`
+            <style>{`
                 .summary {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
