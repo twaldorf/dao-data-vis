@@ -1,15 +1,15 @@
 export const getProposalData = async (id) => {
-    const data = await fetch(`https://governance.decentraland.org/api/proposals/${id}`).then(response => response.json()).then(d => d.data)
+    const data = await fetch(`https://sparkling-silence-d7ff.twaldorf.workers.dev/proxy/?route=proposals/${id}`).then(response => response.json()).then(d => d.data)
     return data
 }
 
 export const getAllProposals = async (id) => {
-    const data = await fetch(`https://governance.decentraland.org/api/proposals`, {mode: 'no-cors'}).then(response => response.json()).then(d => d.data)
+    const data = await fetch(`https://sparkling-silence-d7ff.twaldorf.workers.dev/proxy/?route=proposals`).then(response => response.json()).then(d => d.data)
     return data
 }
 
 export const proposalVotes = async (id) => {
-    const data = await fetch(`https://governance.decentraland.org/api/proposals/${id}/votes`).then(response => response.json()).then(d => d.data)
+    const data = await fetch(`https://sparkling-silence-d7ff.twaldorf.workers.dev/proxy/?route=proposals/${id}/votes`).then(response => response.json()).then(d => d.data)
     const voteIds = Object.keys(data)
     const votes = voteIds.map((id) => {
         return data[id]
