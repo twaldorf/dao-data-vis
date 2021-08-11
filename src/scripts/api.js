@@ -1,15 +1,27 @@
 export const getProposalData = async (id) => {
-    const data = await fetch(`https://sparkling-silence-d7ff.twaldorf.workers.dev/proxy/?route=proposals/${id}`).then(response => response.json()).then(d => d.data)
+    const url = 
+        process.env.NODE_ENV === 'development'
+        ? `https://governance.decentraland.org/api/proposals/${id}` 
+        : `https://sparkling-silence-d7ff.twaldorf.workers.dev/proxy/?route=proposals/${id}`
+    const data = await fetch(url).then(response => response.json()).then(d => d.data)
     return data
 }
 
 export const getAllProposals = async (id) => {
-    const data = await fetch(`https://sparkling-silence-d7ff.twaldorf.workers.dev/proxy/?route=proposals`).then(response => response.json()).then(d => d.data)
+    const url = 
+        process.env.NODE_ENV === 'development'
+        ? `https://governance.decentraland.org/api/proposals` 
+        : `https://sparkling-silence-d7ff.twaldorf.workers.dev/proxy/?route=proposals`
+    const data = await fetch(url).then(response => response.json()).then(d => d.data)
     return data
 }
 
 export const proposalVotes = async (id) => {
-    const data = await fetch(`https://sparkling-silence-d7ff.twaldorf.workers.dev/proxy/?route=proposals/${id}/votes`).then(response => response.json()).then(d => d.data)
+    const url = 
+        process.env.NODE_ENV === 'development'
+        ? `https://governance.decentraland.org/api/proposals/${id}/votes` 
+        : `https://sparkling-silence-d7ff.twaldorf.workers.dev/proxy/?route=proposals/${id}/votes`
+    const data = await fetch(url).then(response => response.json()).then(d => d.data)
     const voteIds = Object.keys(data)
     const votes = voteIds.map((id) => {
         return data[id]
