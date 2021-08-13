@@ -4,17 +4,21 @@ import { Loading } from './Loading.js'
 
 export const VotesOrderedByVp = (props) => {
     if (props.values) {
-        return <BarChartOfValues size={props.size} values={props.values} />
+        return <BarChartOfValues size={props.size} values={props.values} type={props.type} />
     } else {
         return <p>Loading...</p>
     }
+}
+
+export const VotesOrderedByChoicesVp = (props) => {
+        return <BarChartOfValues size={props.size} votes={props.votes} type={props.type} />
 }
 
 export const VpNumber = (props) => {
     return (<>
         <div>
             <li><span className="title">{props.title}</span></li>
-            <li><span>{props.figure}</span></li>
+            <li><span>{props.figure.toLocaleString()}</span></li>
         </div>
         <style>{`
             .title {
@@ -37,7 +41,7 @@ export const VoteCount = (props) => {
         values ? 
         <VpNumber title="Total Votes" figure={values.length} />
         :
-        <Loading />
+        (values == null ? 'No votes' : <Loading />)
     }</>)
 }
 
@@ -47,7 +51,7 @@ export const TotalVp = (props) => {
             props.values ? 
             <VpNumber title="Total Vote Power" figure={props.values.reduce((p,c)=>p+c)} /> 
             : 
-            <Loading />
+            (props.values == null ? 'No votes' : <Loading />)
         }</>
     )
 }
@@ -55,25 +59,60 @@ export const TotalVp = (props) => {
 export const AvgVp = (props) => {
         return (
             <>{
-                props.values ? 
+                !props.values ? 
+                (props.values == null ? 'No votes' : <Loading />) :
                 <VpNumber title="Average Vote Power" 
-                figure={ props.values.reduce((p,c)=>p+c)/props.values.length} /> :
-                <Loading />
+                figure={ props.values.reduce((p,c)=>p+c)/props.values.length} /> 
             }</>
         )
 }
 
 export const MedianVp = (props) => {
-    const median = props.values[Math.round(props.values.length/2)]
+    let median = null
+    if (props.values && props.values.length > 0) {
+        median = props.values[Math.round(props.values.length/2)]
+    }
     return (<>{
-        props.values ? 
+        !props.values ? (props.values == null ? 'No votes' : <Loading />) :
         <VpNumber title="Median Vote Power" figure={median}/>
-        :
-        <Loading />
     }</>)
 }
 
+export const FlippedByQv = (props) => {
+    const { votes, proposal } = props
+    const rootVotes = votes.map(vote => {
+        let vp = Math.round(Math.sqrt(vote.vp))
+        let newVote = {...vote, vp: vp}
+        return newVote
+    })
+    const { choices } = proposal.snapshot_proposal
+
+    //TODO Dry this up
+    const vpByChoice = choices.map((choice, index) => {
+        return rootVotes.filter(v => v.choice === index + 1).reduce((p,c) => {return p + c.vp}, 0)
+    })
+    const winnerChoiceVp = vpByChoice.reduce((p,c) => {
+        return p < c ? c : p
+    }, 0)
+    const winnerChoice = vpByChoice.findIndex(e => e === winnerChoiceVp)
+    const oldVpByChoice = choices.map((choice, index) => {
+        return votes.filter(v => v.choice === index + 1).reduce((p,c) => {return p + c.vp}, 0)
+    })
+    const originalWinnerChoiceVp = oldVpByChoice.reduce((p,c) => {
+        return p < c ? c : p
+    }, 0)
+    const originalWinnerChoice = oldVpByChoice.findIndex(e => e === originalWinnerChoiceVp)
+
+    // Only one option received all votes
+    if (vpByChoice.filter(vp => vp === 0).length === vpByChoice.length - 1) {
+        return <VpNumber title="Flipped by QV?" figure={"No, unanimous"} />
+    }
+
+    return <VpNumber title="Flipped by QV?" figure={winnerChoice === originalWinnerChoice ? "No" : `Yes, QV winner ${choices[winnerChoice]}`} />
+}
+
 export const VoteGap = (props) => {
+    //TODO refactor to include multi-choice props
     const { proposal, votes } = props
     const { choices } = proposal.snapshot_proposal
     // const type = choices.length > 2 ? 'poll' : 'boolean'
@@ -83,8 +122,15 @@ export const VoteGap = (props) => {
         return { votesFor, vpFor }
     })
     const difference = Math.abs(choiceVotes[0].vpFor - choiceVotes[1].vpFor)
-    console.log(choiceVotes)
-    return (<VpNumber title="VP Gap" figure={difference} />)
+    return <VpNumber title="Margin of Victory" figure={difference} />
+}
+
+export const PercentOfVP = (props) => {
+    const cMana = 1.8 * 1000 * 1000 * 1000
+    const appxTotalLand = 90 * 1000
+    const totalVp = cMana + ( appxTotalLand * 2 * 1000 )
+    const percent = Math.trunc( (getTotalVp(props.values) / totalVp * 100) * 10000) / 10000
+    return <VpNumber title="Percent of Total VP Voted" figure={`${percent}%`} />
 }
 
 export const BarChartOfValues = (props) => {
@@ -105,7 +151,24 @@ export const BarChartOfValues = (props) => {
     
         ctx.scale(dpr, dpr)
 
-        fig.drawBarChartFromNumArray(ctx, props.values, 500, size, 'black')
+        if (props.type === 'simple') {
+            fig.drawBarChartFromNumArray(ctx, props.values, 500, size, 'black')
+        } else if (props.type === 'choices') {
+            const colorArray = [
+                'FF851B',
+                'FFDC00',
+                'B10DC9',
+                '85144b',
+                '0074D9',
+                '3D9970',
+            ]
+            const colorfulVotes = props.votes.map(vote => {
+                const color = colorArray[vote.choice]
+                const newVote = {...vote, color: color}
+                return newVote
+            })
+            fig.drawBarChartFromChoiceArray(ctx, colorfulVotes, 500, size)
+        }
     })
 
     return (
@@ -113,4 +176,8 @@ export const BarChartOfValues = (props) => {
             <canvas ref={ref}></canvas>
         </div>
     )
+}
+
+const getTotalVp = (values) => {
+    return values.reduce((p,c)=>p+c)
 }

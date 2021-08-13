@@ -3,13 +3,21 @@ import {
   } from 'react-router-dom'
 
 export const ProposalInList = (props) => {
+    const { status } = props.proposal
+    const color = 
+        status === 'finished' ? 'blue' :
+        status === 'passed' ? 'green' :
+        status === 'enacted' ? 'green' :
+        status === 'rejected' ? 'red' : 'black'
+    const statusClass = `status ${color}`
+
     return (
         <>
             <Link to={props.proposal.id}>
                 <li>
                     <h4 className="type">{props.proposal.type}</h4>
                     <h3>{props.proposal.title}</h3>
-                    <h4 className="status">{props.proposal.status}</h4>
+                    <h4 className={statusClass}>{props.proposal.status}</h4>
                 </li>
             </Link>
             <style>{`
@@ -23,11 +31,13 @@ export const ProposalInList = (props) => {
                     gap: 1rem;
                 }
                 li .type {
-                    color: ${props.proposal.type === 'poi' ? 'red' : 'green'};
-                    text-transform: uppercase;
+                    color: black;
+                    font-weight: 300;
                 }
-                li .status {
+                li .status, li .type {
                     text-transform: uppercase;
+                    margin: auto 0;
+                    font-size: .8rem;
                 }
                 h3, h4 {
                     display: inline;

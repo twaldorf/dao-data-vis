@@ -11,7 +11,7 @@ export const getAllProposals = async (id) => {
     const url = 
         process.env.NODE_ENV === 'development'
         ? `https://governance.decentraland.org/api/proposals` 
-        : `https://sparkling-silence-d7ff.twaldorf.workers.dev/proxy/?route=proposals`
+        : `https://sparkling-silence-d7ff.twaldorf.workers.dev/proxy/?route=proposals?limit=5`
     const data = await fetch(url).then(response => response.json()).then(d => d.data)
     return data
 }
