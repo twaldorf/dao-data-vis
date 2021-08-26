@@ -135,39 +135,40 @@ export const PercentOfVP = (props) => {
 
 export const BarChartOfValues = (props) => {
     const ref = React.useRef()
+    // const chart = React.useRef()
+    // const width = chart.getBoundingClientRect().width
     
     React.useEffect(() => {
         const ctx = ref.current.getContext('2d')
         const canvas = ref.current
     
-        const size = props.size
+        const size = props.size - 32
+        const height = 500
     
         canvas.style.width = `${size}px`
-        canvas.style.height = `${size}px`
+        canvas.style.height = `${height}px`
     
         var dpr = window.devicePixelRatio
         canvas.width = Math.floor(size * dpr)
-        canvas.height = Math.floor(size * dpr)
+        canvas.height = Math.floor(height * dpr)
     
         ctx.scale(dpr, dpr)
 
-        if (props.type === 'simple') {
-            fig.drawBarChartFromNumArray(ctx, props.values, 500, size, 'black')
-        } else if (props.type === 'choices') {
+        if (props.type === 'choices') {
             const colorArray = [
-                'FF851B',
+                'FFAAAA',
+                'AAFFAA',
+                'AAAAFF',
                 'FFDC00',
-                'B10DC9',
                 '85144b',
                 '0074D9',
-                '3D9970',
             ]
             const colorfulVotes = props.votes.map(vote => {
                 const color = colorArray[vote.choice]
                 const newVote = {...vote, color: color}
                 return newVote
             })
-            fig.drawBarChartFromChoiceArray(ctx, colorfulVotes, 500, size)
+            fig.drawBarChartFromChoiceArray(ctx, colorfulVotes, canvas.width / 2, height)
         }
     })
 

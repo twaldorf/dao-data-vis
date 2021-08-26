@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { VotesOrderedByVp, VotesOrderedByChoicesVp, VoteCount, AvgVp, TotalVp, MedianVp, VoteGap, PercentOfVP, FlippedByQv } from './Figures.js'
+import React, { useState, useRef } from 'react'
+import { VotesOrderedByVp, VotesOrderedByChoicesVp, VoteCount, AvgVp, TotalVp, MedianVp, VoteGap, PercentOfVP, FlippedByQv, BarChartOfValues } from './Figures.js'
 import { Loading } from './Loading.js'
 import * as api from '../scripts/api.js'
 import { useParams } from 'react-router-dom'
@@ -8,8 +8,11 @@ export const Proposal = (props) => {
     const [ voteVps, setValues ] = useState(false)
     const [ proposal, setProposal ] = useState(false)
     const [ votes, setVotes ] = useState(false)
+    const [ containerWidth, setWidth ] = useState(0)
     const { id } = useParams()
-    
+
+    const container = useRef(null)
+
     React.useEffect(() => {
         async function fetchAll() {
             const proposal = await api.getProposalData(id)
@@ -23,6 +26,7 @@ export const Proposal = (props) => {
                 setValues(votes)
             }
             setVotes(voteData)
+            setWidth(container.current.getBoundingClientRect().width)
         }
         fetchAll()
     }, [id])
@@ -49,13 +53,9 @@ export const Proposal = (props) => {
                         <PercentOfVP proposal={proposal} values={voteVps} />
                         <FlippedByQv proposal={proposal} votes={votes} />
                     </div> 
-                    <div className="figure">
+                    <div className="figure chart" ref={container}>
                         <h4>Votes ordered by VP</h4>
-                        <VotesOrderedByVp values={voteVps} size={400} type="simple"/>
-                    </div>
-                    <div className="figure">
-                        <h4>Votes ordered by VP</h4>
-                        <VotesOrderedByChoicesVp votes={votes} size={400} type="choices"/>
+                        <VotesOrderedByChoicesVp votes={votes} size={containerWidth} type="choices"/>
                     </div>
                 </> : <Loading /> }
             </section>
@@ -88,6 +88,10 @@ export const Proposal = (props) => {
                     grid-auto-columns: min-content;
                     gap: 1rem;
                     height: min-content;
+                }
+                .chart {
+                    grid-column-start:1;
+                    grid-column-end: 3;
                 }
                 h3 {
                     grid-column-start:1;
