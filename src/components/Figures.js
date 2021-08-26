@@ -2,14 +2,6 @@ import React from 'react'
 import * as fig from '../scripts/fig.js'
 import { Loading } from './Loading.js'
 
-export const VotesOrderedByVp = (props) => {
-    if (props.values) {
-        return <BarChartOfValues size={props.size} values={props.values} type={props.type} />
-    } else {
-        return <p>Loading...</p>
-    }
-}
-
 export const VotesOrderedByChoicesVp = (props) => {
         return <BarChartOfValues size={props.size} votes={props.votes} type={props.type} choices={props.choices} />
 }

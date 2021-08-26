@@ -12,7 +12,7 @@ function App() {
       <div className="App">
         <Link to="/">
           <header>
-            <img src={logo} className="logo"/>
+            <img src={logo} className="logo" alt="DAO"/>
             <h1>Decentraland DAO proposal voting data</h1>
           </header>
         </Link>

@@ -3,8 +3,6 @@ export const drawBarChartFromChoiceArray = (ctx, data, width, height) => {
     data.forEach((datum, index, arr) => {
         ctx.fillStyle = `#${datum.color}`
         let x = index * width / arr.length
-        let y = height
-        let barY = -datum.vp / max * 500
         ctx.fillRect(
             index * width / arr.length,
             height - 85,

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { VotesOrderedByVp, VotesOrderedByChoicesVp, VoteCount, AvgVp, TotalVp, MedianVp, VoteGap, PercentOfVP, FlippedByQv, BarChartOfValues } from './Figures.js'
+import { VotesOrderedByChoicesVp, VoteCount, AvgVp, TotalVp, MedianVp, VoteGap, PercentOfVP, FlippedByQv } from './Figures.js'
 import { Loading } from './Loading.js'
 import * as api from '../scripts/api.js'
 import { useParams } from 'react-router-dom'
