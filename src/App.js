@@ -4,6 +4,7 @@ import { ProposalList } from './components/ProposalList.js'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { Proposal } from './components/Proposal.js'
 import { Summary } from './components/Summary.js'
+import logo from './logo.svg'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <div className="App">
         <Link to="/">
           <header>
+            <img src={logo} className="logo"/>
             <h1>Decentraland DAO proposal voting data</h1>
           </header>
         </Link>
@@ -33,6 +35,14 @@ function App() {
             text-align: left;
             padding: 4rem;
           }
+          .logo {
+            width: 2rem;
+            margin-right: 1rem;
+            vertical-align: middle;
+          }
+          ul {
+            padding:0;
+          }
           a {
             text-decoration: none;
             color: black;
@@ -45,6 +55,10 @@ function App() {
           }
           header {
             font-size: 1rem;
+          }
+          h1 {
+            display: inline;
+            vertical-align: middle;
           }
         `}</style>
     </div>

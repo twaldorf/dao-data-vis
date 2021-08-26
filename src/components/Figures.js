@@ -105,10 +105,10 @@ export const FlippedByQv = (props) => {
 
     // Only one option received all votes
     if (vpByChoice.filter(vp => vp === 0).length === vpByChoice.length - 1) {
-        return <VpNumber title="Flipped by QV?" figure={"No, unanimous"} />
+        return <VpNumber title="Flipped by Quadtratic Voting? " figure={"No, unanimous"} />
     }
 
-    return <VpNumber title="Flipped by QV?" figure={winnerChoice === originalWinnerChoice ? "No" : `Yes, QV winner ${choices[winnerChoice]}`} />
+    return <VpNumber title="Flipped by Quadtratic Voting? " figure={winnerChoice === originalWinnerChoice ? "No" : `Yes, simulated winner: "${choices[winnerChoice]}"`} />
 }
 
 export const VoteGap = (props) => {
@@ -156,8 +156,8 @@ export const BarChartOfValues = (props) => {
 
         if (props.type === 'choices') {
             const colorArray = [
-                'FF8888',
                 '88FF88',
+                'FF8888',
                 '8888FF',
                 'FFDC00',
                 '85144b',
