@@ -11,7 +11,7 @@ export const VotesOrderedByVp = (props) => {
 }
 
 export const VotesOrderedByChoicesVp = (props) => {
-        return <BarChartOfValues size={props.size} votes={props.votes} type={props.type} />
+        return <BarChartOfValues size={props.size} votes={props.votes} type={props.type} choices={props.choices} />
 }
 
 export const VpNumber = (props) => {
@@ -156,19 +156,20 @@ export const BarChartOfValues = (props) => {
 
         if (props.type === 'choices') {
             const colorArray = [
-                'FFAAAA',
-                'AAFFAA',
-                'AAAAFF',
+                'FF8888',
+                '88FF88',
+                '8888FF',
                 'FFDC00',
                 '85144b',
                 '0074D9',
             ]
             const colorfulVotes = props.votes.map(vote => {
-                const color = colorArray[vote.choice]
+                const color = colorArray[vote.choice - 1]
                 const newVote = {...vote, color: color}
                 return newVote
             })
             fig.drawBarChartFromChoiceArray(ctx, colorfulVotes, canvas.width / 2, height)
+            fig.drawKey(ctx, props.choices, colorArray, canvas.width / 2, height)
         }
     })
 

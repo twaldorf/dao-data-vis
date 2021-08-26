@@ -55,7 +55,7 @@ export const Proposal = (props) => {
                     </div> 
                     <div className="figure chart" ref={container}>
                         <h4>Votes ordered by VP</h4>
-                        <VotesOrderedByChoicesVp votes={votes} size={containerWidth} type="choices"/>
+                        <VotesOrderedByChoicesVp votes={votes} size={containerWidth} choices={proposal.snapshot_proposal.choices} type="choices"/>
                     </div>
                 </> : <Loading /> }
             </section>
